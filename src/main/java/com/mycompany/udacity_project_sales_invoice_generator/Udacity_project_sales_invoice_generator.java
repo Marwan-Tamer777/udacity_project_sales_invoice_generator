@@ -5,6 +5,8 @@
 
 package com.mycompany.udacity_project_sales_invoice_generator;
 
+import view.MainFrame;
+
 /**
  *
  * @author dell
@@ -13,5 +15,10 @@ public class Udacity_project_sales_invoice_generator {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        MainFrame view = new MainFrame("udacity_project_sales_invoice_generator");
+        view.setVisible(true);
+        /*
+        test method for fileOPerations readFile
+        */
     }
 }
