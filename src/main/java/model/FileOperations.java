@@ -25,10 +25,13 @@ public class FileOperations {
                 String line;
                 BufferedReader br= null;  
                 
+                //Try and catch to open the "InvoiceHeader.csv" file and reads from it.
                 try {
                     br = new BufferedReader(new FileReader("InvoiceHeader.csv"));
                     //skip first line of headers and making an array of InvoiceHeaders.
                     br.readLine();
+                    
+                    //if the file exists, it will be parsed into the InvoiceHeader Array line by line.
                     while ((line = br.readLine()) != null){
                         String[] invoiceRow = line.split(",");
                         invoices.add(new InvoiceHeader(Integer.parseInt(invoiceRow[0]),invoiceRow[1],invoiceRow[2]));
@@ -37,10 +40,14 @@ public class FileOperations {
                     Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
+                //Try and catch to open the "InvoiceLine.csv" file and reads from it.
                 try {
                     br = new BufferedReader(new FileReader("InvoiceLine.csv"));
                     //skip first line of headers and adding each InvoiceLine to its InvoiceHeader.
                     br.readLine();
+                    
+                    //starts checking if each line corresponds to an invoice Header, if yes
+                    // the line will be parsed into an InvoiceLine and added to the Invoiceheader.
                     while ((line = br.readLine()) != null){
                         String[] invoiceLineRow = line.split(",");
                         
@@ -56,32 +63,34 @@ public class FileOperations {
                     Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-                //printing the data that was parsed from the CSV file.
-                for(int i =0;i<invoices.size();i++){
-                    System.out.print(invoices.get(i).getInvoiceNum() +" "+invoices.get(i).getInvoiceDate() +" "+
-                            invoices.get(i).getCustomerName());
-                    System.out.println();
-                    
-                    for(int x =0;x<invoices.get(i).getInvoiceLines().size();x++){
-                        InvoiceLine il = invoices.get(i).getInvoiceLines().get(x);
-                        System.out.print(il.getInvoiceNum() +" "+il.getItemName()+" "+il.getItemPrice() + " " + il.getItemCount());
-                         System.out.println();
-                    }
-                    System.out.println();
-                }
+//                //printing the data that was parsed from the CSV file.
+//                for(int i =0;i<invoices.size();i++){
+//                    System.out.print(invoices.get(i).getInvoiceNum() +" "+invoices.get(i).getInvoiceDate() +" "+
+//                            invoices.get(i).getCustomerName());
+//                    System.out.println();
+//                    
+//                    for(int x =0;x<invoices.get(i).getInvoiceLines().size();x++){
+//                        InvoiceLine il = invoices.get(i).getInvoiceLines().get(x);
+//                        System.out.print(il.getInvoiceNum() +" "+il.getItemName()+" "+il.getItemPrice() + " " + il.getItemCount());
+//                         System.out.println();
+//                    }
+//                    System.out.println();
+//                }
                 
         return invoices;
     }
     
     
     public static void WriteFile(ArrayList<InvoiceHeader> dataRows){
+        //cvs file headers for both InvoiceHeader and InvoiceLine files.
         String[] invoicesHeadersHeaders = {"invoiceNum","invoiceDate","CustomerName"};
         String[] invoicesLinesHeaders = {"invoiceNum","itemName","itemPrice","Count"};
 
         FileWriter fileWriter = null;
+        
         try {
             fileWriter = new FileWriter(new File("InvoiceHeader.csv"));
-            //write headers first line here.
+            //write the first line headers here.
             StringBuilder headers = new StringBuilder();
             for (String invoicesHeadersHeader : invoicesHeadersHeaders) {
                 headers.append(invoicesHeadersHeader);
@@ -116,7 +125,7 @@ public class FileOperations {
             headers.append("\n");
             fileWriter.write(headers.toString()); 
         
-            //iteratres over the given data and writes them into the CSV invoice Header file.
+            //iteratres over the given data and writes them into the CSV invoice Line File.
             for (InvoiceHeader data : dataRows) {
                 for(InvoiceLine lineDetails : data.getInvoiceLines()){
                     StringBuilder line = new StringBuilder();
