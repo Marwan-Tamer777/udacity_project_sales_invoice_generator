@@ -56,4 +56,8 @@ public class InvoiceHeader {
     public void addInvoiceLine(InvoiceLine il){
         invoiceLines.add(il);
     }
+    
+    public String[] getTableFormat(){
+        return null;
+    }
 }

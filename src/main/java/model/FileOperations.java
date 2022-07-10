@@ -19,9 +19,15 @@ import java.util.logging.Logger;
  * @author dell
  */
 public class FileOperations {
+    
+    private static ArrayList<InvoiceHeader> INVOICES;
+    private static final String[] INVOICES_HEADERS ={"No.","Date","Customer","Total"};
+    private static final String[] INVOICES_ITEMS_HEADERS ={"No.","Item Name","Item Price","Item Count","Total"};
+    
+    
     public static ArrayList<InvoiceHeader> ReadFile(){
                 //parsing a CSV file into BufferReader class constructor 
-                ArrayList <InvoiceHeader> invoices = new ArrayList<InvoiceHeader>();
+                ArrayList <InvoiceHeader> invoices = new ArrayList<>();
                 String line;
                 BufferedReader br= null;  
                 
@@ -63,20 +69,20 @@ public class FileOperations {
                     Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-//                //printing the data that was parsed from the CSV file.
-//                for(int i =0;i<invoices.size();i++){
-//                    System.out.print(invoices.get(i).getInvoiceNum() +" "+invoices.get(i).getInvoiceDate() +" "+
-//                            invoices.get(i).getCustomerName());
-//                    System.out.println();
-//                    
-//                    for(int x =0;x<invoices.get(i).getInvoiceLines().size();x++){
-//                        InvoiceLine il = invoices.get(i).getInvoiceLines().get(x);
-//                        System.out.print(il.getInvoiceNum() +" "+il.getItemName()+" "+il.getItemPrice() + " " + il.getItemCount());
-//                         System.out.println();
-//                    }
-//                    System.out.println();
-//                }
-                
+                //printing the data that was parsed from the CSV file.
+                for(int i =0;i<invoices.size();i++){
+                    System.out.print(invoices.get(i).getInvoiceNum() +" "+invoices.get(i).getInvoiceDate() +" "+
+                            invoices.get(i).getCustomerName());
+                    System.out.println();
+                    
+                    for(int x =0;x<invoices.get(i).getInvoiceLines().size();x++){
+                        InvoiceLine il = invoices.get(i).getInvoiceLines().get(x);
+                        System.out.print(il.getInvoiceNum() +" "+il.getItemName()+" "+il.getItemPrice() + " " + il.getItemCount());
+                         System.out.println();
+                    }
+                    System.out.println();
+                }
+        INVOICES = invoices;
         return invoices;
     }
     
@@ -144,5 +150,66 @@ public class FileOperations {
         }
         
         
+    }
+    
+    
+    //A Static array of headers for Singleton design pattern for easier Modifcation.
+    public static String[] getInvoicesTaableHeaders(){
+        return INVOICES_HEADERS;
+    }
+    
+    public static String[][] getInvoicesTableData(){
+        String[][] data;
+        int total = 0;
+        data = new String[INVOICES.size()][INVOICES_HEADERS.length];
+        
+        for(int i=0;i<INVOICES.size();i++){
+            InvoiceHeader ih = INVOICES.get(i);
+            data[i][0] = String.valueOf(ih.getInvoiceNum());
+            data[i][1] = ih.getInvoiceDate();
+            data[i][2] = ih.getCustomerName();
+            for(InvoiceLine il: ih.getInvoiceLines()){
+                total+=il.getItemPrice()*il.getItemCount();
+            }
+            data[i][3] = String.valueOf(total);
+            total =0;
+        }
+        
+        return data;
+    }
+    
+    
+    /*
+        achicve single responsiblity by using the getTableForm from InvoiceHeader and Line respectivly.
+    */
+    
+    //A Static array of headers for Singleton design pattern for easier Modifcation.
+    public static String[] getInvoicesItemsTableHeaders(){
+        return INVOICES_ITEMS_HEADERS;
+    }
+    
+    //{"No.","Item Name","Item Price","Item Count","Total"};
+    public static String[][] getInvoicesItemsTableData(){
+        String[][] data;
+        int itemsCount =0;
+        for(InvoiceHeader invoice: INVOICES){
+            itemsCount+=invoice.getInvoiceLines().size();
+        }
+        data = new String[itemsCount][INVOICES_ITEMS_HEADERS.length];
+        itemsCount =0;
+        for(int i=0;i<INVOICES.size();i++){
+            InvoiceHeader ih = INVOICES.get(i);
+            for(InvoiceLine il: ih.getInvoiceLines()){
+                data[itemsCount][0] = String.valueOf(il.getInvoiceNum());
+                data[itemsCount][1] = il.getItemName();
+                data[itemsCount][2] = String.valueOf(il.getItemPrice());
+                data[itemsCount][3] = String.valueOf(il.getItemCount());
+                data[itemsCount][4] = String.valueOf(il.getItemPrice()*il.getItemCount());
+                itemsCount++;
+            }
+            
+        }
+        
+        return data;
     }
 }

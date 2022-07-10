@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import model.FileOperations;
 /**
  *
  * @author dell
@@ -54,12 +55,8 @@ public class MainFrame extends JFrame{
         JPanel leftPanel=new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
         leftPanel.setBorder(new EmptyBorder(new Insets(10, 15, 10, 15)));
-        String[][] table1Data = {
-            {"1","2022-12-12","ahmed","131.21"},
-            {"2","2022-12-12","ali","4214"},
-            {"3","2022-12-12","mohamed","512.13"}
-        };
-        String[] table1Headers ={"No.","Date","Customer","Total"};
+        String[][] table1Data = FileOperations.getInvoicesTableData();
+        String[] table1Headers = FileOperations.getInvoicesTaableHeaders();
         JTable leftTable = new JTable(table1Data,table1Headers);
         leftPanel.add(new JLabel("Invoices Table"));
         leftPanel.add(new JScrollPane(leftTable));
@@ -99,12 +96,8 @@ public class MainFrame extends JFrame{
         rightInputsPanel.add(invoiceTotalCost);
         rightPanel.add(rightInputsPanel);
         
-        String[][] table2Data = {
-            {"1","Ice cream","5","2","10"},
-            {"2","TV","500","1","500"},
-            {"1","battery","1.25","8","10"},
-        };
-        String[] table2Headers ={"No.","Item Name","Item Price","Item Count","Total"};
+        String[][] table2Data = FileOperations.getInvoicesItemsTableData();
+        String[] table2Headers = FileOperations.getInvoicesItemsTableHeaders();
         JTable rightTable = new JTable(table2Data,table2Headers);
         rightPanel.add(new JLabel("Invoice Items"));
         rightPanel.add(new JScrollPane(rightTable));

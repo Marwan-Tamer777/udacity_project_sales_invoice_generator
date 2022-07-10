@@ -56,4 +56,8 @@ public class InvoiceLine {
     public void setItemCount(int c){
         itemCount = c;
     }
+    
+    public String[] getTableFormat(){
+        return null;
+    }
 }
