@@ -4,10 +4,25 @@
  */
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author dell
  */
-public class TableItemsActions {
+public class TableItemsActions implements ActionListener{
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch(e.getActionCommand()){
+            case "C" -> {
+                System.out.println("Monday");
+                }
+            case "D"->{
+                System.out.println("Tuseday");
+            }
+        }
+    }
     
 }

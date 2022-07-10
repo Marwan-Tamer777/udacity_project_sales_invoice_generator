@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package view;
+import controller.*;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -24,16 +24,25 @@ public class MainFrame extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridLayout(1,2));
         
+        //creating all the controller objects to add as event listeners;
+        ButtonsActions buttonsListener = new ButtonsActions();
+        MenuItemsActions menuListener = new MenuItemsActions();
+        TableItemsActions tableListener = new TableItemsActions();
+        
         //Creating and adding the menu bar.
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
         JMenuItem load = new JMenuItem("Load File");
+        load.setActionCommand("L");
+        load.addActionListener(menuListener);
         load.setMnemonic(KeyEvent.VK_L);
         load.setAccelerator(KeyStroke.getKeyStroke(
         KeyEvent.VK_L, ActionEvent.ALT_MASK));
         menu.add(load);
         JMenuItem save = new JMenuItem("Save File");
+        save.setActionCommand("S");
+        save.addActionListener(menuListener);
         save.setMnemonic(KeyEvent.VK_S);
         save.setAccelerator(KeyStroke.getKeyStroke(
         KeyEvent.VK_S, ActionEvent.ALT_MASK));
@@ -57,8 +66,12 @@ public class MainFrame extends JFrame{
         
         JPanel leftButtonsPanel = new JPanel();
         leftButtonsPanel.setLayout(new BoxLayout(leftButtonsPanel,BoxLayout.X_AXIS));
-        JButton createBtn=new JButton("Create New Invoice");       
-        JButton deleteBtn=new JButton("Delete Current Selected Invoice");   
+        JButton createBtn=new JButton("Create New Invoice"); 
+        createBtn.setActionCommand("C");
+        createBtn.addActionListener(buttonsListener);
+        JButton deleteBtn=new JButton("Delete Current Selected Invoice"); 
+        deleteBtn.setActionCommand("D");
+        deleteBtn.addActionListener(buttonsListener);
         leftButtonsPanel.add(createBtn);
         leftButtonsPanel.add(deleteBtn);
         leftPanel.add(leftButtonsPanel);
@@ -98,8 +111,12 @@ public class MainFrame extends JFrame{
         
         JPanel rightButtonsPanel = new JPanel();
         rightButtonsPanel.setLayout(new BoxLayout(rightButtonsPanel,BoxLayout.X_AXIS));
-        JButton saveEditBtn=new JButton("Save");       
-        JButton cancelEditBtn=new JButton("Cancel");   
+        JButton saveEditBtn=new JButton("Save");  
+        saveEditBtn.setActionCommand("SE");
+        saveEditBtn.addActionListener(buttonsListener);
+        JButton cancelEditBtn=new JButton("Cancel");  
+        cancelEditBtn.setActionCommand("CE");
+        cancelEditBtn.addActionListener(buttonsListener);
         rightButtonsPanel.add(saveEditBtn);
         rightButtonsPanel.add(cancelEditBtn);  
         rightPanel.add(rightButtonsPanel);

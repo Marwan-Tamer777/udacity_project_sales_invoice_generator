@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,8 +12,48 @@ import java.util.Date;
  */
 public class InvoiceHeader {
     private int invoiceNum;
-    private Date invoiceDate;
+    private String invoiceDate;
     private String customerName;
-    private InvoiceLine[] invoiceLines;
+    private ArrayList<InvoiceLine> invoiceLines;
     
+    public InvoiceHeader(){}
+    
+    public InvoiceHeader(int i,String d,String c){
+        setInvoiceNum(i);
+        setInvoiceDate(d);
+        setCustomerName(c);
+        invoiceLines = new ArrayList<InvoiceLine>();
+    }
+    
+    public int getInvoiceNum(){
+        return invoiceNum;
+    }
+    
+    public String getInvoiceDate(){
+        return invoiceDate;
+    }
+    
+    public String getCustomerName(){
+        return customerName;
+    }
+    
+    public ArrayList<InvoiceLine> getInvoiceLines(){
+        return invoiceLines;
+    }
+    
+    public void setInvoiceNum(int i){
+        invoiceNum = i;
+    }
+    
+    public void setInvoiceDate(String d){
+        invoiceDate = d;
+    }
+    
+    public void setCustomerName(String c){
+        customerName = c;
+    }
+    
+    public void addInvoiceLine(InvoiceLine il){
+        invoiceLines.add(il);
+    }
 }
