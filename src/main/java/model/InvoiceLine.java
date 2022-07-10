@@ -58,6 +58,12 @@ public class InvoiceLine {
     }
     
     public String[] getTableFormat(){
-        return null;
+        String[] data = new String[FileOperations.getInvoicesItemsTableHeaders().length];
+        data[0] = String.valueOf(getInvoiceNum());
+        data[1] = getItemName();
+        data[2] = String.valueOf(getItemPrice());
+        data[3] = String.valueOf(getItemCount());
+        data[4] = String.valueOf(getItemPrice()*getItemCount());
+        return data;
     }
 }

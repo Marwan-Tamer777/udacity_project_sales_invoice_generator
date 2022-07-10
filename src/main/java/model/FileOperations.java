@@ -70,18 +70,18 @@ public class FileOperations {
                 }
                 
                 //printing the data that was parsed from the CSV file.
-                for(int i =0;i<invoices.size();i++){
-                    System.out.print(invoices.get(i).getInvoiceNum() +" "+invoices.get(i).getInvoiceDate() +" "+
-                            invoices.get(i).getCustomerName());
-                    System.out.println();
-                    
-                    for(int x =0;x<invoices.get(i).getInvoiceLines().size();x++){
-                        InvoiceLine il = invoices.get(i).getInvoiceLines().get(x);
-                        System.out.print(il.getInvoiceNum() +" "+il.getItemName()+" "+il.getItemPrice() + " " + il.getItemCount());
-                         System.out.println();
-                    }
-                    System.out.println();
-                }
+//                for(int i =0;i<invoices.size();i++){
+//                    System.out.print(invoices.get(i).getInvoiceNum() +" "+invoices.get(i).getInvoiceDate() +" "+
+//                            invoices.get(i).getCustomerName());
+//                    System.out.println();
+//                    
+//                    for(int x =0;x<invoices.get(i).getInvoiceLines().size();x++){
+//                        InvoiceLine il = invoices.get(i).getInvoiceLines().get(x);
+//                        System.out.print(il.getInvoiceNum() +" "+il.getItemName()+" "+il.getItemPrice() + " " + il.getItemCount());
+//                         System.out.println();
+//                    }
+//                    System.out.println();
+//                }
         INVOICES = invoices;
         return invoices;
     }
@@ -154,34 +154,21 @@ public class FileOperations {
     
     
     //A Static array of headers for Singleton design pattern for easier Modifcation.
-    public static String[] getInvoicesTaableHeaders(){
+    public static String[] getInvoicesTableHeaders(){
         return INVOICES_HEADERS;
     }
     
     public static String[][] getInvoicesTableData(){
         String[][] data;
-        int total = 0;
         data = new String[INVOICES.size()][INVOICES_HEADERS.length];
         
         for(int i=0;i<INVOICES.size();i++){
-            InvoiceHeader ih = INVOICES.get(i);
-            data[i][0] = String.valueOf(ih.getInvoiceNum());
-            data[i][1] = ih.getInvoiceDate();
-            data[i][2] = ih.getCustomerName();
-            for(InvoiceLine il: ih.getInvoiceLines()){
-                total+=il.getItemPrice()*il.getItemCount();
-            }
-            data[i][3] = String.valueOf(total);
-            total =0;
+            data[i] = INVOICES.get(i).getTableFormat();
         }
         
         return data;
     }
     
-    
-    /*
-        achicve single responsiblity by using the getTableForm from InvoiceHeader and Line respectivly.
-    */
     
     //A Static array of headers for Singleton design pattern for easier Modifcation.
     public static String[] getInvoicesItemsTableHeaders(){
@@ -197,14 +184,11 @@ public class FileOperations {
         }
         data = new String[itemsCount][INVOICES_ITEMS_HEADERS.length];
         itemsCount =0;
+        
         for(int i=0;i<INVOICES.size();i++){
             InvoiceHeader ih = INVOICES.get(i);
             for(InvoiceLine il: ih.getInvoiceLines()){
-                data[itemsCount][0] = String.valueOf(il.getInvoiceNum());
-                data[itemsCount][1] = il.getItemName();
-                data[itemsCount][2] = String.valueOf(il.getItemPrice());
-                data[itemsCount][3] = String.valueOf(il.getItemCount());
-                data[itemsCount][4] = String.valueOf(il.getItemPrice()*il.getItemCount());
+                data[itemsCount]= il.getTableFormat();
                 itemsCount++;
             }
             

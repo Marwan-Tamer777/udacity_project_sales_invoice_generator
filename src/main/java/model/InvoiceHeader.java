@@ -5,6 +5,8 @@
 package model;
 
 import java.util.ArrayList;
+import model.FileOperations;
+
 
 /**
  *
@@ -58,6 +60,15 @@ public class InvoiceHeader {
     }
     
     public String[] getTableFormat(){
-        return null;
+        String[] data = new String[FileOperations.getInvoicesTableHeaders().length];
+        int total =0;
+        data[0] = String.valueOf(getInvoiceNum());
+        data[1] = getInvoiceDate();
+        data[2] = getCustomerName();
+        for(InvoiceLine il: getInvoiceLines()){
+            total+=il.getItemPrice()*il.getItemCount();
+        }
+        data[3] = String.valueOf(total);
+        return data;
     }
 }

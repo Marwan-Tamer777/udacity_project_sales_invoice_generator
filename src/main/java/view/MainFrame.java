@@ -56,7 +56,7 @@ public class MainFrame extends JFrame{
         leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
         leftPanel.setBorder(new EmptyBorder(new Insets(10, 15, 10, 15)));
         String[][] table1Data = FileOperations.getInvoicesTableData();
-        String[] table1Headers = FileOperations.getInvoicesTaableHeaders();
+        String[] table1Headers = FileOperations.getInvoicesTableHeaders();
         JTable leftTable = new JTable(table1Data,table1Headers);
         leftPanel.add(new JLabel("Invoices Table"));
         leftPanel.add(new JScrollPane(leftTable));
