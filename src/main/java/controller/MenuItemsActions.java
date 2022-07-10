@@ -8,12 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.FileOperations;
+import model.InvoiceHeader;
+import model.InvoiceLine;
 
 /**
  *
@@ -30,6 +33,12 @@ public class MenuItemsActions  implements ActionListener{
             }
             case "S"->{
                 System.out.println("Save File");
+                ArrayList<InvoiceHeader> ihs = FileOperations.ReadFile();
+                InvoiceHeader ih = new InvoiceHeader(5,"2023-10-12","Abdul");
+                InvoiceLine il = new InvoiceLine(5,"Clock",30,2);
+                ih.addInvoiceLine(il);
+                ihs.add(ih);
+                FileOperations.WriteFile(ihs);
             }
         }
     }

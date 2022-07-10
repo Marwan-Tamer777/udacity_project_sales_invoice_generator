@@ -6,7 +6,9 @@ package model;
 
 import controller.MenuItemsActions;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -73,6 +75,65 @@ public class FileOperations {
     
     
     public static void WriteFile(ArrayList<InvoiceHeader> dataRows){
+        String[] invoicesHeadersHeaders = {"invoiceNum","invoiceDate","CustomerName"};
+        String[] invoicesLinesHeaders = {"invoiceNum","itemName","itemPrice","Count"};
+
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(new File("InvoiceHeader.csv"));
+            //write headers first line here.
+            StringBuilder headers = new StringBuilder();
+            for (String invoicesHeadersHeader : invoicesHeadersHeaders) {
+                headers.append(invoicesHeadersHeader);
+                headers.append(',');
+            }
+            headers.append("\n");
+            fileWriter.write(headers.toString()); 
+        
+            //iteratres over the given data and writes them into the CSV invoice Header file.
+            for (InvoiceHeader data : dataRows) {
+                StringBuilder line = new StringBuilder();
+                line.append(data.getInvoiceNum());line.append(",");
+                line.append(data.getInvoiceDate());line.append(",");
+                line.append(data.getCustomerName());line.append(",");
+                line.append("\n");
+                fileWriter.write(line.toString());   
+            }
+
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(FileOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            fileWriter = new FileWriter(new File("InvoiceLine.csv"));
+            //write headers first line here.
+            StringBuilder headers = new StringBuilder();
+            for (String invoicesLineHeader : invoicesLinesHeaders) {
+                headers.append(invoicesLineHeader);
+                headers.append(',');
+            }
+            headers.append("\n");
+            fileWriter.write(headers.toString()); 
+        
+            //iteratres over the given data and writes them into the CSV invoice Header file.
+            for (InvoiceHeader data : dataRows) {
+                for(InvoiceLine lineDetails : data.getInvoiceLines()){
+                    StringBuilder line = new StringBuilder();
+                    line.append(lineDetails.getInvoiceNum());line.append(",");
+                    line.append(lineDetails.getItemName());line.append(",");
+                    line.append(lineDetails.getItemPrice());line.append(",");
+                    line.append(lineDetails.getItemCount());line.append(",");
+                    line.append("\n");
+                    fileWriter.write(line.toString());   
+                }
+            }
+
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(FileOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }
 }
