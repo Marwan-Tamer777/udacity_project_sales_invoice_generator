@@ -28,7 +28,7 @@ public class MainFrame extends JFrame{
         //creating all the controller objects to add as event listeners;
         ButtonsActions buttonsListener = new ButtonsActions();
         MenuItemsActions menuListener = new MenuItemsActions();
-        TableItemsActions tableListener = new TableItemsActions();
+//        TableItemsActions tableListener = new TableItemsActions();
         
         //Creating and adding the menu bar.
         JMenuBar menuBar = new JMenuBar();
@@ -55,9 +55,12 @@ public class MainFrame extends JFrame{
         JPanel leftPanel=new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
         leftPanel.setBorder(new EmptyBorder(new Insets(10, 15, 10, 15)));
-        String[][] table1Data = FileOperations.getInvoicesTableData();
-        String[] table1Headers = FileOperations.getInvoicesTableHeaders();
-        JTable leftTable = new JTable(table1Data,table1Headers);
+        
+        JTable leftTable = new JTableModelController(JTableModelController.INVOICES_TABLE).getTable();
+//        leftTable.setCellSelectionEnabled(true);
+//        leftTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        leftTable.getSelectionModel().addListSelectionListener(tableListener);
+//        leftTable.getModel().addTableModelListener(tableListener);
         leftPanel.add(new JLabel("Invoices Table"));
         leftPanel.add(new JScrollPane(leftTable));
         
@@ -96,9 +99,8 @@ public class MainFrame extends JFrame{
         rightInputsPanel.add(invoiceTotalCost);
         rightPanel.add(rightInputsPanel);
         
-        String[][] table2Data = FileOperations.getInvoicesItemsTableData();
-        String[] table2Headers = FileOperations.getInvoicesItemsTableHeaders();
-        JTable rightTable = new JTable(table2Data,table2Headers);
+        JTable rightTable = new JTableModelController(JTableModelController.INVOICE_ITEMS_TABLE).getTable();
+//       rightTable.getModel().addTableModelListener(tableListener);
         rightPanel.add(new JLabel("Invoice Items"));
         rightPanel.add(new JScrollPane(rightTable));
         
