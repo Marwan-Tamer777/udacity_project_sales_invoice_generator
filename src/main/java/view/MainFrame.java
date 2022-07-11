@@ -21,6 +21,8 @@ public class MainFrame extends JFrame{
     private static JTextField invoiceDate = new JTextField();
     private static JTextField invoiceCustomerName = new JTextField();
     private static JTextField invoiceTotalCost = new JTextField();
+    public static JTable viewInvoicesTable = new JTableModelController(JTableModelController.INVOICES_TABLE).getTable();
+    public static JTable viewInvoicesItemsTable = new JTableModelController(JTableModelController.INVOICE_ITEMS_TABLE).getTable();
     
     
     public MainFrame(String name){
@@ -61,13 +63,8 @@ public class MainFrame extends JFrame{
         leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
         leftPanel.setBorder(new EmptyBorder(new Insets(10, 15, 10, 15)));
         
-        JTable leftTable = new JTableModelController(JTableModelController.INVOICES_TABLE).getTable();
-//        leftTable.setCellSelectionEnabled(true);
-//        leftTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        leftTable.getSelectionModel().addListSelectionListener(tableListener);
-//        leftTable.getModel().addTableModelListener(tableListener);
         leftPanel.add(new JLabel("Invoices Table"));
-        leftPanel.add(new JScrollPane(leftTable));
+        leftPanel.add(new JScrollPane(viewInvoicesTable));
         
         JPanel leftButtonsPanel = new JPanel();
         leftButtonsPanel.setLayout(new BoxLayout(leftButtonsPanel,BoxLayout.X_AXIS));
@@ -107,10 +104,8 @@ public class MainFrame extends JFrame{
         rightInputsPanel.add(invoiceTotalCost);
         rightPanel.add(rightInputsPanel);
         
-        JTable rightTable = new JTableModelController(JTableModelController.INVOICE_ITEMS_TABLE).getTable();
-//       rightTable.getModel().addTableModelListener(tableListener);
         rightPanel.add(new JLabel("Invoice Items"));
-        rightPanel.add(new JScrollPane(rightTable));
+        rightPanel.add(new JScrollPane(viewInvoicesItemsTable));
         
         JPanel rightButtonsPanel = new JPanel();
         rightButtonsPanel.setLayout(new BoxLayout(rightButtonsPanel,BoxLayout.X_AXIS));

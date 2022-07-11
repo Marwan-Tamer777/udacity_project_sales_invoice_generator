@@ -19,7 +19,7 @@ import view.MainFrame;
  *
  * @author dell
  */
-public class JTableModelController extends AbstractTableModel implements ListSelectionListener,TableModelListener{
+public class JTableModelController extends AbstractTableModel implements ListSelectionListener,TableModelListener,TableModel{
 
     private String[] columnNames;
     private Object[][] data;
@@ -38,9 +38,23 @@ public class JTableModelController extends AbstractTableModel implements ListSel
             data= FileOperations.getInvoicesItemsTableData();
             columnNames = FileOperations.getInvoicesItemsTableHeaders();
         }
+        
         table = new JTable(this);
         table.getModel().addTableModelListener(this);
         table.getSelectionModel().addListSelectionListener(this);
+    }
+    
+    //Copy Constrcutor to update table Data
+    public JTableModelController(String [] [] d,int type){
+        tableType = type;
+        
+        if(type == INVOICES_TABLE){
+            columnNames = FileOperations.getInvoicesTableHeaders();
+        } else if (type == INVOICE_ITEMS_TABLE){
+            columnNames = FileOperations.getInvoicesItemsTableHeaders();
+        }
+        
+        data = d;
     }
     
     public JTable getTable(){
@@ -104,7 +118,13 @@ public class JTableModelController extends AbstractTableModel implements ListSel
         
         if(tableType == INVOICE_ITEMS_TABLE){
             MainFrame.updateTextFields(selectedData);
-        }
+        } else if (tableType == INVOICES_TABLE){
+            
+            MainFrame.viewInvoicesItemsTable.setModel(new JTableModelController(
+            FileOperations.getInvoicesItemsTableData(Integer.parseInt(selectedData[0])),
+            INVOICE_ITEMS_TABLE));
+            fireTableDataChanged();
+        } 
       }
 
     @Override

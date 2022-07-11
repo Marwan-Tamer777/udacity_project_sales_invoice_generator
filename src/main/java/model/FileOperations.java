@@ -175,7 +175,6 @@ public class FileOperations {
         return INVOICES_ITEMS_HEADERS;
     }
     
-    //{"No.","Item Name","Item Price","Item Count","Total"};
     public static String[][] getInvoicesItemsTableData(){
         String[][] data;
         int itemsCount =0;
@@ -194,6 +193,28 @@ public class FileOperations {
             
         }
         
+        return data;
+    }
+    
+    public static String[][] getInvoicesItemsTableData(int invoiceNo){
+        String[][] data;
+        int itemsCount = 0;
+        InvoiceHeader ih = null;
+
+        for(InvoiceHeader invoice: INVOICES){
+            if(invoice.getInvoiceNum() == invoiceNo){
+                ih = invoice;
+                itemsCount=ih.getInvoiceLines().size();
+            }
+        }
+        
+        data = new String[itemsCount][INVOICES_ITEMS_HEADERS.length];
+        itemsCount =0;
+        
+        for(InvoiceLine il: ih.getInvoiceLines()){
+            data[itemsCount]= il.getTableFormat();
+            itemsCount++;
+        }        
         return data;
     }
 }
