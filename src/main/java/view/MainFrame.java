@@ -17,6 +17,11 @@ import model.FileOperations;
  * @author dell
  */
 public class MainFrame extends JFrame{
+    private static JTextField invoiceNumber = new JTextField();
+    private static JTextField invoiceDate = new JTextField();
+    private static JTextField invoiceCustomerName = new JTextField();
+    private static JTextField invoiceTotalCost = new JTextField();
+    
     
     public MainFrame(String name){
         //creating the Home Frame.
@@ -85,10 +90,13 @@ public class MainFrame extends JFrame{
 
         JPanel rightInputsPanel = new JPanel();
         rightInputsPanel.setLayout(new GridLayout(4,2));
-        JTextField invoiceNumber = new JTextField();
-        JTextField invoiceDate = new JTextField();
-        JTextField invoiceCustomerName = new JTextField();
-        JTextField invoiceTotalCost = new JTextField();
+        invoiceNumber = new JTextField();
+        invoiceDate = new JTextField();
+        invoiceCustomerName = new JTextField();
+        invoiceTotalCost = new JTextField();
+        invoiceNumber.setEditable(false);
+        invoiceTotalCost.setEditable(false);
+        
         rightInputsPanel.add(new JLabel("Invoice Number"));
         rightInputsPanel.add(invoiceNumber);
         rightInputsPanel.add(new JLabel("Invoice Date"));
@@ -118,5 +126,13 @@ public class MainFrame extends JFrame{
         this.add(rightPanel);
         
         this.pack();
+    }
+    
+    public static void updateTextFields(String[] data){
+        invoiceNumber.setText(data[0]);
+        invoiceDate.setText(data[1]);
+        invoiceCustomerName.setText(data[2]);
+        invoiceTotalCost.setText(data[3]);
+        
     }
 }

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import java.util.Arrays;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -12,6 +13,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import model.FileOperations;
+import view.MainFrame;
 
 /**
  *
@@ -71,13 +73,14 @@ public class JTableModelController extends AbstractTableModel implements ListSel
     public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        if(tableType == INVOICES_TABLE){
-            return false;
-        } else if(col==0){
-            return false;
-        } else {
-            return true;
-        }
+        return false;
+//        if(tableType == INVOICES_TABLE){
+//            return false;
+//        } else if(col==0){
+//            return false;
+//        } else {
+//            return true;
+//        }
     }
     
     public void setValueAt(Object value, int row, int col) {
@@ -87,17 +90,21 @@ public class JTableModelController extends AbstractTableModel implements ListSel
 
     @Override
       public void valueChanged(ListSelectionEvent e) {
-        String selectedData = null;
+         
+        String[] selectedData = null;
 
-        int[] selectedRow = table.getSelectedRows();
-        int[] selectedColumns = table.getSelectedColumns();
+        int selectedRow = table.getSelectedRow();
+        int columnCount = table.getColumnCount();
+        selectedData = new String[columnCount];
+       
+          for (int j = 0; j < columnCount; j++) {
 
-        for (int i = 0; i < selectedRow.length; i++) {
-          for (int j = 0; j < selectedColumns.length; j++) {
-            selectedData = (String) table.getValueAt(selectedRow[i], selectedColumns[j]);
+            selectedData[j] = (String) table.getValueAt(selectedRow,j);
           }
+        
+        if(tableType == INVOICE_ITEMS_TABLE){
+            MainFrame.updateTextFields(selectedData);
         }
-        System.out.println("Selected: " + selectedData);
       }
 
     @Override

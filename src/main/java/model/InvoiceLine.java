@@ -11,14 +11,14 @@ package model;
 public class InvoiceLine {
     private int invoiceNum;
     private String itemName;
-    private int itemPrice;
+    private double itemPrice;
     private int itemCount;
     
     public InvoiceLine(){
         
     }
     
-    public InvoiceLine(int i,String n,int p,int c){
+    public InvoiceLine(int i,String n,double p,int c){
         setInvoiceNum(i);
         setItemName(n);
         setItemPrice(p);
@@ -33,7 +33,7 @@ public class InvoiceLine {
         return itemName;
     }
     
-    public int getItemPrice(){
+    public double getItemPrice(){
         return itemPrice;
     }
     
@@ -49,7 +49,7 @@ public class InvoiceLine {
         itemName = n;
     }
     
-    public void setItemPrice(int p){
+    public void setItemPrice(double p){
         itemPrice = p;
     }
     
@@ -63,7 +63,7 @@ public class InvoiceLine {
         data[1] = getItemName();
         data[2] = String.valueOf(getItemPrice());
         data[3] = String.valueOf(getItemCount());
-        data[4] = String.valueOf(getItemPrice()*getItemCount());
+        data[4] = String.valueOf((Double)getItemPrice()*getItemCount());
         return data;
     }
 }

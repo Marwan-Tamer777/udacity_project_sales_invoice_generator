@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class FileOperations {
     
-    private static ArrayList<InvoiceHeader> INVOICES;
+    public static ArrayList<InvoiceHeader> INVOICES;
     private static final String[] INVOICES_HEADERS ={"No.","Date","Customer","Total"};
     private static final String[] INVOICES_ITEMS_HEADERS ={"No.","Item Name","Item Price","Item Count","Total"};
     
@@ -60,7 +60,7 @@ public class FileOperations {
                         for(int i =0;i<invoices.size();i++){
                             if(invoices.get(i).getInvoiceNum() == Integer.parseInt(invoiceLineRow[0])){
                                 invoices.get(i).addInvoiceLine(
-                                        new InvoiceLine(Integer.parseInt(invoiceLineRow[0]),invoiceLineRow[1],Integer.parseInt(invoiceLineRow[2]),Integer.parseInt(invoiceLineRow[3]))
+                                        new InvoiceLine(Integer.parseInt(invoiceLineRow[0]),invoiceLineRow[1],Double.parseDouble(invoiceLineRow[2]),Integer.parseInt(invoiceLineRow[3]))
                                 );
                             }
                         }
