@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,10 +50,17 @@ public class FileOperations {
                     //if the file exists, it will be parsed into the InvoiceHeader Array line by line.
                     while ((line = br.readLine()) != null){
                         String[] invoiceRow = line.split(",");
+                        new SimpleDateFormat("DDmmyyyy").parse(invoiceRow[1]);
                         invoices.add(new InvoiceHeader(Integer.parseInt(invoiceRow[0]),invoiceRow[1],invoiceRow[2]));
                     }
                 } catch (IOException ex) {
+                    JOptionPane.showConfirmDialog(null, new JLabel("No header file found 'InvoiceHeader.csv'"),"ERROR", JOptionPane.OK_CANCEL_OPTION);
                     Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
+                    System.exit(0);
+                } catch (ParseException e) {
+                    JOptionPane.showConfirmDialog(null, new JLabel("Some Data is in the wrong format in 'InvoiceHeader.csv' file"),"ERROR", JOptionPane.OK_CANCEL_OPTION);
+                    Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, e);
+                    System.exit(0);    
                 }
                 
                 //Try and catch to open the "InvoiceLine.csv" file and reads from it.
@@ -74,7 +83,9 @@ public class FileOperations {
                         }
                     }
                 } catch (IOException ex) {
+                    JOptionPane.showConfirmDialog(null, new JLabel("No file found 'InvoiceLine.csv'"),"ERROR", JOptionPane.OK_CANCEL_OPTION);
                     Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
+                    System.exit(0);
                 }
                 
                 //printing the data that was parsed from the CSV file.
@@ -125,7 +136,9 @@ public class FileOperations {
 
             fileWriter.close();
         } catch (IOException ex) {
-            Logger.getLogger(FileOperations.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showConfirmDialog(null, new JLabel("No header file found 'InvoiceHeader.csv'"),"ERROR", JOptionPane.OK_CANCEL_OPTION);
+            Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(0);
         }
         
         try {
@@ -154,7 +167,9 @@ public class FileOperations {
 
             fileWriter.close();
         } catch (IOException ex) {
-            Logger.getLogger(FileOperations.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showConfirmDialog(null, new JLabel("No file found 'InvoiceLine.csv'"),"ERROR", JOptionPane.OK_CANCEL_OPTION);
+            Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(0);
         }
         
         
