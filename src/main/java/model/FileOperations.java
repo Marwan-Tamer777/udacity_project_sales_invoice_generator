@@ -13,6 +13,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Box;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import view.MainFrame;
 
 /*
@@ -200,7 +205,6 @@ public class FileOperations {
                 data[itemsCount]= il.getTableFormat();
                 itemsCount++;
             }
-            
         }
         
         return data;
@@ -255,6 +259,15 @@ public class FileOperations {
         MainFrame.updateTables();
     }
     
+    
+    public static InvoiceHeader addInvoice(String[] data){
+        InvoiceHeader invoice = new InvoiceHeader(
+        INVOICES.get(INVOICES.size()-1).getInvoiceNum()+1, data[0], data[1]);
+        
+        INVOICES.add(invoice);
+        return invoice;
+    }
+    
     public static void deleteInvoice(String invoiceNo){
         for(InvoiceHeader invoice: INVOICES){
             if(invoice.getInvoiceNum() == Integer.parseInt(invoiceNo)){
@@ -269,5 +282,65 @@ public class FileOperations {
         MainFrame.updateTables();
     }
     
+    
+    public static void createInvoiceDialog(){
+        JTextField dateField = new JTextField(10);
+        JTextField nameField = new JTextField(50);
+
+        JPanel myPanel = new JPanel();
+        myPanel.add(new JLabel("date in DD-MM-YYYY format:"));
+        myPanel.add(dateField);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("Customer Name:"));
+        myPanel.add(nameField);
+
+        String[] data = new String[2];
+        int result = JOptionPane.showConfirmDialog(null, myPanel,
+        "Please Enter the invoice data and Customer Name", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            data[0] = dateField.getText();
+            data[1] = nameField.getText();
+            userInvoiceItemDialog(addInvoice(data));
+            MainFrame.updateTables();
+        }
+    }
+    
+    
+    private static void userInvoiceItemDialog(InvoiceHeader invoice){
+        JTextField itemNameField = new JTextField(50);
+        JTextField itemPriceField = new JTextField(4);
+        JTextField itemCountField = new JTextField(5);
+
+        JPanel myPanel = new JPanel();
+        myPanel.add(new JLabel("Item name:"));
+        myPanel.add(itemNameField);
+        myPanel.add(Box.createHorizontalStrut(15));
+        myPanel.add(new JLabel("Item Price:"));
+        myPanel.add(itemPriceField);
+        myPanel.add(Box.createHorizontalStrut(15));
+        myPanel.add(new JLabel("Item Count:"));
+        myPanel.add(itemCountField);
+
+        String[] data = new String[3];
+        
+        int result= JOptionPane.showOptionDialog(null, 
+        myPanel, 
+        "Please input the purchase details", 
+        JOptionPane.OK_CANCEL_OPTION, 
+        JOptionPane.INFORMATION_MESSAGE, 
+        null, 
+        new String[]{"input another after this?", "last item."},
+        "default");
+       
+        data[0] = itemNameField.getText();
+        data[1] = itemPriceField.getText();
+        data[2] = itemCountField.getText();
+            
+        InvoiceLine il = new InvoiceLine(invoice.getInvoiceNum(),data[0],Double.parseDouble(data[1]),Integer.parseInt(data[2]));
+        invoice.addInvoiceLine(il);
+        if (result == JOptionPane.OK_OPTION) {
+            userInvoiceItemDialog(invoice);
+        } 
+    }
     
 }

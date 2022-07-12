@@ -5,7 +5,10 @@
 
 package com.mycompany.udacity_project_sales_invoice_generator;
 
+import java.util.ArrayList;
 import model.FileOperations;
+import model.InvoiceHeader;
+import model.InvoiceLine;
 import view.MainFrame;
 
 /**
@@ -16,11 +19,28 @@ public class Udacity_project_sales_invoice_generator {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-        FileOperations.ReadFile();
+        readFileTest(FileOperations.ReadFile());
         MainFrame view = new MainFrame("udacity_project_sales_invoice_generator");
         view.setVisible(true);
-        /*
-        test method for fileOPerations readFile
-        */
+    }
+    
+    
+    public static void readFileTest(ArrayList<InvoiceHeader> invoices){
+        
+        for(int i=0;i<invoices.size();i++){
+            InvoiceHeader ih = invoices.get(i);
+            System.out.print("Invoice"+ih.getInvoiceNum()+"Num");
+            System.out.println();
+            System.out.println("{");
+            System.out.print("Invoice"+ih.getInvoiceNum()+"Data (" + ih.getInvoiceDate() + "), " + ih.getCustomerName());
+            System.out.println();
+            for(InvoiceLine il: ih.getInvoiceLines()){
+                System.out.print(il.getItemName() + ", "+il.getItemPrice() + ", "+ il.getItemCount());
+                System.out.println();
+            }
+            System.out.println();
+            System.out.println("}");
+            System.out.println();
+        }
     }
 }

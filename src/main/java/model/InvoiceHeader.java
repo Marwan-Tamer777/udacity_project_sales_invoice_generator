@@ -61,7 +61,7 @@ public class InvoiceHeader {
     
     public String[] getTableFormat(){
         String[] data = new String[FileOperations.getInvoicesTableHeaders().length];
-        int total =0;
+        double total =0;
         data[0] = String.valueOf(getInvoiceNum());
         data[1] = getInvoiceDate();
         data[2] = getCustomerName();

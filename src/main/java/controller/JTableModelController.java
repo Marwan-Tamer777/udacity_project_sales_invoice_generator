@@ -124,9 +124,9 @@ public class JTableModelController extends AbstractTableModel implements ListSel
           }
         
         if(tableType == INVOICE_ITEMS_TABLE){
-            MainFrame.updateTextFields(FileOperations.getInvoiceData(Integer.parseInt(selectedData[0])));
+            //MainFrame.updateTextFields(FileOperations.getInvoiceData(Integer.parseInt(selectedData[0])));
         } else if (tableType == INVOICES_TABLE){
-            
+            MainFrame.updateTextFields(FileOperations.getInvoiceData(Integer.parseInt(selectedData[0])));
             MainFrame.viewInvoicesItemsTable.setModel(
                     new JTableModelController(FileOperations.getInvoicesItemsTableData(Integer.parseInt(selectedData[0])),INVOICE_ITEMS_TABLE));
 

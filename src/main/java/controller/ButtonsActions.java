@@ -20,10 +20,12 @@ public class ButtonsActions implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()){
             case "C" -> {
+                FileOperations.createInvoiceDialog();
                 System.out.println("Create Invoice");
-                }
+            }
             case "D"->{
                 int index = MainFrame.viewInvoicesTable.getSelectedRow();
+                if(index ==-1){break;}
                 FileOperations.deleteInvoiceByTableIndex(index);
                 System.out.println("Delete Invoice");
             }
