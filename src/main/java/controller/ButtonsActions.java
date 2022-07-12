@@ -23,6 +23,8 @@ public class ButtonsActions implements ActionListener{
                 System.out.println("Create Invoice");
                 }
             case "D"->{
+                int index = MainFrame.viewInvoicesTable.getSelectedRow();
+                FileOperations.deleteInvoiceByTableIndex(index);
                 System.out.println("Delete Invoice");
             }
             case "SE"->{
@@ -31,6 +33,8 @@ public class ButtonsActions implements ActionListener{
                 System.out.println("Save Edited Invoice: ");
             }
             case "CE"->{
+                String[] data = FileOperations.getInvoiceData(Integer.parseInt(MainFrame.getTextFieldsValues()[0]));
+                MainFrame.updateTextFields(data);
                 System.out.println("Cancel Edit");
             }
         }

@@ -254,4 +254,20 @@ public class FileOperations {
         }
         MainFrame.updateTables();
     }
+    
+    public static void deleteInvoice(String invoiceNo){
+        for(InvoiceHeader invoice: INVOICES){
+            if(invoice.getInvoiceNum() == Integer.parseInt(invoiceNo)){
+                INVOICES.remove(invoice);
+            }
+        }
+        MainFrame.updateTables();
+    }
+    
+    public static void deleteInvoiceByTableIndex(int invoiceNo){
+        INVOICES.remove(invoiceNo);
+        MainFrame.updateTables();
+    }
+    
+    
 }
