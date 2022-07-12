@@ -38,7 +38,7 @@ public class FileOperations {
                 try {
                     br = new BufferedReader(new FileReader("InvoiceHeader.csv"));
                     //skip first line of headers and making an array of InvoiceHeaders.
-                    br.readLine();
+                    //br.readLine();
                     
                     //if the file exists, it will be parsed into the InvoiceHeader Array line by line.
                     while ((line = br.readLine()) != null){
@@ -53,7 +53,7 @@ public class FileOperations {
                 try {
                     br = new BufferedReader(new FileReader("InvoiceLine.csv"));
                     //skip first line of headers and adding each InvoiceLine to its InvoiceHeader.
-                    br.readLine();
+                    //br.readLine();
                     
                     //starts checking if each line corresponds to an invoice Header, if yes
                     // the line will be parsed into an InvoiceLine and added to the Invoiceheader.
@@ -100,13 +100,13 @@ public class FileOperations {
         try {
             fileWriter = new FileWriter(new File("InvoiceHeader.csv"));
             //write the first line headers here.
-            StringBuilder headers = new StringBuilder();
-            for (String invoicesHeadersHeader : invoicesHeadersHeaders) {
-                headers.append(invoicesHeadersHeader);
-                headers.append(',');
-            }
-            headers.append("\n");
-            fileWriter.write(headers.toString()); 
+//            StringBuilder headers = new StringBuilder();
+//            for (String invoicesHeadersHeader : invoicesHeadersHeaders) {
+//                headers.append(invoicesHeadersHeader);
+//                headers.append(',');
+//            }
+//            headers.append("\n");
+//            fileWriter.write(headers.toString()); 
         
             //iteratres over the given data and writes them into the CSV invoice Header file.
             for (InvoiceHeader data : dataRows) {
@@ -126,13 +126,13 @@ public class FileOperations {
         try {
             fileWriter = new FileWriter(new File("InvoiceLine.csv"));
             //write headers first line here.
-            StringBuilder headers = new StringBuilder();
-            for (String invoicesLineHeader : invoicesLinesHeaders) {
-                headers.append(invoicesLineHeader);
-                headers.append(',');
-            }
-            headers.append("\n");
-            fileWriter.write(headers.toString()); 
+//            StringBuilder headers = new StringBuilder();
+//            for (String invoicesLineHeader : invoicesLinesHeaders) {
+//                headers.append(invoicesLineHeader);
+//                headers.append(',');
+//            }
+//            headers.append("\n");
+//            fileWriter.write(headers.toString()); 
         
             //iteratres over the given data and writes them into the CSV invoice Line File.
             for (InvoiceHeader data : dataRows) {

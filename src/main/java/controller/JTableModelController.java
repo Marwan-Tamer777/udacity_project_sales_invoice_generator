@@ -6,6 +6,7 @@ package controller;
 
 import java.util.Arrays;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
@@ -39,6 +40,8 @@ public class JTableModelController extends AbstractTableModel implements ListSel
         }
         
         table = new JTable(this);
+        table.setCellSelectionEnabled(true);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.getModel().addTableModelListener(this);
         table.getSelectionModel().addListSelectionListener(this);
     }
@@ -112,7 +115,9 @@ public class JTableModelController extends AbstractTableModel implements ListSel
         int selectedRow = table.getSelectedRow();
         int columnCount = table.getColumnCount();
         selectedData = new String[columnCount];
-       
+        
+        //guard if the action listener is fired while no row is being selected.
+        if(selectedRow == -1){return;}
           for (int j = 0; j < columnCount; j++) {
 
             selectedData[j] = (String) table.getValueAt(selectedRow,j);
