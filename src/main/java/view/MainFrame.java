@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import model.FileOperations;
+
 /**
  *
  * @author dell
@@ -123,11 +124,30 @@ public class MainFrame extends JFrame{
         this.pack();
     }
     
+    //populates the textfields with the given data.
     public static void updateTextFields(String[] data){
         invoiceNumber.setText(data[0]);
         invoiceDate.setText(data[1]);
         invoiceCustomerName.setText(data[2]);
         invoiceTotalCost.setText(data[3]);
         
+    }
+    
+    //returns the current values in the textFields.
+    public static String[] getTextFieldsValues(){
+        String[] data = new String[4];
+        data[0] = invoiceNumber.getText();
+        data[1] = invoiceDate.getText();
+        data[2] = invoiceCustomerName.getText();
+        data[3] = invoiceTotalCost.getText();
+        return data;
+    }
+    
+    //ReModels the table to reflect the data updates from the fileOperations object.
+    public static void updateTables(){
+        viewInvoicesTable.setModel(
+                    new JTableModelController(FileOperations.getInvoicesTableData(),JTableModelController.INVOICES_TABLE));
+        viewInvoicesItemsTable.setModel(
+                    new JTableModelController(FileOperations.getInvoicesItemsTableData(),JTableModelController.INVOICE_ITEMS_TABLE));
     }
 }

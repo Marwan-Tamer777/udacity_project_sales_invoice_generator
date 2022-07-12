@@ -13,14 +13,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.MainFrame;
 
-/**
- *
- * @author dell
+/*
+    This is the main model file which is used as the middleware between any userAction and change in the data system.
+    -it manages the data in the form of InvoiceHeader ArrayList.
+    -it reads and write to thhe csv Files using.
+    -send and recieve the data from other components in the app as String arrays and modifes on the Invoices Data Object.
  */
 public class FileOperations {
     
-    public static ArrayList<InvoiceHeader> INVOICES;
+    private static ArrayList<InvoiceHeader> INVOICES;
     private static final String[] INVOICES_HEADERS ={"No.","Date","Customer","Total"};
     private static final String[] INVOICES_ITEMS_HEADERS ={"No.","Item Name","Item Price","Item Count","Total"};
     
@@ -153,11 +156,17 @@ public class FileOperations {
     }
     
     
+    //A Static Source of the Data for the whole application.
+    public static ArrayList<InvoiceHeader> getInvoicces(){
+        return INVOICES;
+    }
+    
     //A Static array of headers for Singleton design pattern for easier Modifcation.
     public static String[] getInvoicesTableHeaders(){
         return INVOICES_HEADERS;
     }
     
+    //reformats the invoices data into a 2D array for the Jtable and rest of components to use.
     public static String[][] getInvoicesTableData(){
         String[][] data;
         data = new String[INVOICES.size()][INVOICES_HEADERS.length];
@@ -175,6 +184,7 @@ public class FileOperations {
         return INVOICES_ITEMS_HEADERS;
     }
     
+    //reformats all of invoices items data into a 2D array for the Jtable and rest of components to use.
     public static String[][] getInvoicesItemsTableData(){
         String[][] data;
         int itemsCount =0;
@@ -196,6 +206,7 @@ public class FileOperations {
         return data;
     }
     
+    //reformats a single instance of invoice item into a 2D array for the Jtable and rest of components to use.
     public static String[][] getInvoicesItemsTableData(int invoiceNo){
         String[][] data;
         int itemsCount = 0;
@@ -216,5 +227,31 @@ public class FileOperations {
             itemsCount++;
         }        
         return data;
+    }
+    
+    //finds and return a certain Invoice data after reformatting.
+    public static String[] getInvoiceData(int invoiceNo){
+        String[] data = null;
+        int itemsCount = 0;
+
+        for(InvoiceHeader invoice: INVOICES){
+            if(invoice.getInvoiceNum() == invoiceNo){
+                data = invoice.getTableFormat();
+            }
+        }
+             
+        return data;
+    }
+    
+    //updates an invoice data given the input, and calls the mainframe update method to reflect the
+    //chnages on the GUI
+    public static void updateInvoice(String[] data){
+        for(InvoiceHeader ih: INVOICES){
+            if(ih.getInvoiceNum() == Integer.parseInt(data[0])){
+                ih.setInvoiceDate(data[1]);
+                ih.setCustomerName(data[2]);
+            }
+        }
+        MainFrame.updateTables();
     }
 }

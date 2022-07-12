@@ -15,9 +15,8 @@ import javax.swing.table.TableModel;
 import model.FileOperations;
 import view.MainFrame;
 
-/**
- *
- * @author dell
+/*
+    this Class is used as a modified TableModel to manages both tables instances and user actions.
  */
 public class JTableModelController extends AbstractTableModel implements ListSelectionListener,TableModelListener,TableModel{
 
@@ -102,6 +101,9 @@ public class JTableModelController extends AbstractTableModel implements ListSel
         fireTableCellUpdated(row, col);
     }
 
+    //when the user selects a certain entry from the table, depending on the table either.
+    //1- the program will either updates the invoice items table with all the invcoie items from a certain invoice.
+    //2- the program will populates the text field with the invoice details when selecting an invoice item.
     @Override
       public void valueChanged(ListSelectionEvent e) {
          
@@ -117,13 +119,12 @@ public class JTableModelController extends AbstractTableModel implements ListSel
           }
         
         if(tableType == INVOICE_ITEMS_TABLE){
-            MainFrame.updateTextFields(selectedData);
+            MainFrame.updateTextFields(FileOperations.getInvoiceData(Integer.parseInt(selectedData[0])));
         } else if (tableType == INVOICES_TABLE){
             
-            MainFrame.viewInvoicesItemsTable.setModel(new JTableModelController(
-            FileOperations.getInvoicesItemsTableData(Integer.parseInt(selectedData[0])),
-            INVOICE_ITEMS_TABLE));
-            fireTableDataChanged();
+            MainFrame.viewInvoicesItemsTable.setModel(
+                    new JTableModelController(FileOperations.getInvoicesItemsTableData(Integer.parseInt(selectedData[0])),INVOICE_ITEMS_TABLE));
+
         } 
       }
 

@@ -6,6 +6,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import model.FileOperations;
+import view.MainFrame;
 
 /**
  *
@@ -23,7 +26,9 @@ public class ButtonsActions implements ActionListener{
                 System.out.println("Delete Invoice");
             }
             case "SE"->{
-                System.out.println("Save Edited Invoice");
+                String[] data = MainFrame.getTextFieldsValues();
+                FileOperations.updateInvoice(data);
+                System.out.println("Save Edited Invoice: ");
             }
             case "CE"->{
                 System.out.println("Cancel Edit");
