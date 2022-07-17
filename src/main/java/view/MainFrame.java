@@ -72,7 +72,7 @@ public class MainFrame extends JFrame{
         JButton createBtn=new JButton("Create New Invoice"); 
         createBtn.setActionCommand("C");
         createBtn.addActionListener(buttonsListener);
-        JButton deleteBtn=new JButton("Delete Current Selected Invoice"); 
+        JButton deleteBtn=new JButton("Delete Current Selected Invoice/Invoice Item"); 
         deleteBtn.setActionCommand("D");
         deleteBtn.addActionListener(buttonsListener);
         leftButtonsPanel.add(createBtn);

@@ -297,6 +297,20 @@ public class FileOperations {
         MainFrame.updateTables();
     }
     
+    public static void deleteInvoiceItemByTableIndex(String invoiceIndex,String invoiceItem){
+        for(InvoiceHeader ih: INVOICES){ 
+            if(ih.getInvoiceNum() == Integer.parseInt(invoiceIndex)){          
+                for(InvoiceLine il: ih.getInvoiceLines()){
+                    if(il.getItemName().equals(invoiceItem)){
+                        ih.removeInvoiceLine(il);
+                        break;
+                    }
+                }
+            }
+        }
+        MainFrame.updateTables();
+    }
+    
     
     public static void createInvoiceDialog(){
         JTextField dateField = new JTextField(10);

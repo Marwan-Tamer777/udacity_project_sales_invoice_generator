@@ -59,6 +59,9 @@ public class InvoiceHeader {
         invoiceLines.add(il);
     }
     
+    public void removeInvoiceLine(InvoiceLine il){
+        invoiceLines.remove(il);
+    }
     public String[] getTableFormat(){
         String[] data = new String[FileOperations.getInvoicesTableHeaders().length];
         double total =0;

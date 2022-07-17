@@ -24,9 +24,22 @@ public class ButtonsActions implements ActionListener{
                 System.out.println("Create Invoice");
             }
             case "D"->{
-                int index = MainFrame.viewInvoicesTable.getSelectedRow();
-                if(index ==-1){break;}
-                FileOperations.deleteInvoiceByTableIndex(index);
+                int indexInvoice = MainFrame.viewInvoicesTable.getSelectedRow();
+                int indexInvoiceItem = MainFrame.viewInvoicesItemsTable.getSelectedRow();
+                //System.out.print("data: "+indexInvoice+" "+indexInvoiceItem);
+                //System.out.println();
+                if(indexInvoice ==-1 && indexInvoiceItem == -1){
+                    break;
+                } else if (indexInvoice ==-1){
+                    
+                    FileOperations.deleteInvoiceItemByTableIndex(
+                        (String)MainFrame.viewInvoicesItemsTable.getValueAt(indexInvoiceItem, 0),
+                        (String)MainFrame.viewInvoicesItemsTable.getValueAt(indexInvoiceItem, 1)  
+                    );
+                } else if(indexInvoiceItem == -1){
+                    FileOperations.deleteInvoiceByTableIndex(indexInvoice);
+                }
+                
                 System.out.println("Delete Invoice");
             }
             case "SE"->{
