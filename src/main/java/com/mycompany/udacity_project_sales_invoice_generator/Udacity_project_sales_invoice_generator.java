@@ -19,14 +19,14 @@ public class Udacity_project_sales_invoice_generator {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-        readFileTest(FileOperations.ReadFile());
+        
         MainFrame view = new MainFrame("udacity_project_sales_invoice_generator");
         view.setVisible(true);
     }
     
     
-    public static void readFileTest(ArrayList<InvoiceHeader> invoices){
-        
+    public static void readFileTest(){
+        ArrayList<InvoiceHeader> invoices= FileOperations.getInvoicces();
         for(int i=0;i<invoices.size();i++){
             InvoiceHeader ih = invoices.get(i);
             System.out.print("Invoice"+ih.getInvoiceNum()+"Num");

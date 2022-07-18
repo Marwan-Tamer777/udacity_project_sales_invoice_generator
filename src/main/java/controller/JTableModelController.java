@@ -31,10 +31,26 @@ public class JTableModelController extends AbstractTableModel implements ListSel
     public JTableModelController(int type){
         tableType = type;
         
-        if(type == INVOICES_TABLE){
+        if(FileOperations.getInvoicces() == null){
+            data= new String [0][0];
+            if(type == INVOICES_TABLE){
+                columnNames = FileOperations.getInvoicesTableHeaders();
+            } else if (type == INVOICE_ITEMS_TABLE){
+                columnNames = FileOperations.getInvoicesItemsTableHeaders();
+            }
+            
+            table = new JTable(this);
+            table.setCellSelectionEnabled(true);
+            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            table.getModel().addTableModelListener(this);
+            table.getSelectionModel().addListSelectionListener(this);
+            return;
+        }
+        
+        if(tableType == INVOICES_TABLE){
             data= FileOperations.getInvoicesTableData();
             columnNames = FileOperations.getInvoicesTableHeaders();
-        } else if (type == INVOICE_ITEMS_TABLE){
+        } else if (tableType == INVOICE_ITEMS_TABLE){
             data= FileOperations.getInvoicesItemsTableData();
             columnNames = FileOperations.getInvoicesItemsTableHeaders();
         }

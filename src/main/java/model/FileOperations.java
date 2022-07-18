@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,6 +34,8 @@ public class FileOperations {
     private static ArrayList<InvoiceHeader> INVOICES;
     private static final String[] INVOICES_HEADERS ={"No.","Date","Customer","Total"};
     private static final String[] INVOICES_ITEMS_HEADERS ={"No.","Item Name","Item Price","Item Count","Total"};
+    private static String invoiceHeaderPath;
+    private static String invoiceLinesPath;
     
     
     public static ArrayList<InvoiceHeader> ReadFile(){
@@ -40,10 +43,15 @@ public class FileOperations {
                 ArrayList <InvoiceHeader> invoices = new ArrayList<>();
                 String line;
                 BufferedReader br= null;  
-                
+                JFileChooser jfc = new JFileChooser();
+                JOptionPane.showConfirmDialog(null, 
+                        "Please Choose the 'invoiceHeader.csv' file!", "Choose File", JOptionPane.DEFAULT_OPTION);  
+                jfc.showOpenDialog(jfc);
+                invoiceHeaderPath = jfc.getSelectedFile().getPath();
                 //Try and catch to open the "InvoiceHeader.csv" file and reads from it.
                 try {
-                    br = new BufferedReader(new FileReader("InvoiceHeader.csv"));
+                    
+                    br = new BufferedReader(new FileReader(invoiceHeaderPath));
                     //skip first line of headers and making an array of InvoiceHeaders.
                     //br.readLine();
                     
@@ -63,9 +71,14 @@ public class FileOperations {
                     System.exit(0);    
                 }
                 
+                
                 //Try and catch to open the "InvoiceLine.csv" file and reads from it.
                 try {
-                    br = new BufferedReader(new FileReader("InvoiceLine.csv"));
+                    JOptionPane.showConfirmDialog(null, 
+                        "Please Choose the 'invoiceLine.csv' file!", "Choose File", JOptionPane.DEFAULT_OPTION);                    
+                    jfc.showOpenDialog(jfc);
+                    invoiceLinesPath = jfc.getSelectedFile().getPath();
+                    br = new BufferedReader(new FileReader(invoiceLinesPath));
                     //skip first line of headers and adding each InvoiceLine to its InvoiceHeader.
                     //br.readLine();
                     
@@ -114,7 +127,7 @@ public class FileOperations {
         FileWriter fileWriter = null;
         
         try {
-            fileWriter = new FileWriter(new File("InvoiceHeader.csv"));
+            fileWriter = new FileWriter(new File(invoiceHeaderPath));
             //write the first line headers here.
 //            StringBuilder headers = new StringBuilder();
 //            for (String invoicesHeadersHeader : invoicesHeadersHeaders) {
@@ -142,7 +155,7 @@ public class FileOperations {
         }
         
         try {
-            fileWriter = new FileWriter(new File("InvoiceLine.csv"));
+            fileWriter = new FileWriter(new File(invoiceLinesPath));
             //write headers first line here.
 //            StringBuilder headers = new StringBuilder();
 //            for (String invoicesLineHeader : invoicesLinesHeaders) {
