@@ -31,7 +31,7 @@ public class MenuItemsActions  implements ActionListener{
             }
             case "S"->{
                 System.out.println("Save File");
-                ArrayList<InvoiceHeader> ihs = FileOperations.getInvoicces();
+                ArrayList<InvoiceHeader> ihs = FileOperations.getInvoices();
                 FileOperations.WriteFile(ihs);
                 JOptionPane.showConfirmDialog(null, 
                 "Data Saved Successfully", "YAY!", JOptionPane.DEFAULT_OPTION);

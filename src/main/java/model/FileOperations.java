@@ -45,12 +45,15 @@ public class FileOperations {
                 BufferedReader br= null;  
                 JFileChooser jfc = new JFileChooser();
                 JOptionPane.showConfirmDialog(null, 
-                        "Please Choose the 'invoiceHeader.csv' file!", "Choose File", JOptionPane.DEFAULT_OPTION);  
+                        "Please Choose the 'InvoiceHeader.csv' file!", "Choose File", JOptionPane.DEFAULT_OPTION);  
                 jfc.showOpenDialog(jfc);
                 invoiceHeaderPath = jfc.getSelectedFile().getPath();
+                
                 //Try and catch to open the "InvoiceHeader.csv" file and reads from it.
                 try {
-                    
+                    if(!jfc.getSelectedFile().getName().equals("InvoiceHeader.csv")){
+                        throw new Exception("Please make sure to choose a file with the correct name and format of InvoiceHeader.csv");
+                    }
                     br = new BufferedReader(new FileReader(invoiceHeaderPath));
                     //skip first line of headers and making an array of InvoiceHeaders.
                     //br.readLine();
@@ -62,22 +65,29 @@ public class FileOperations {
                         invoices.add(new InvoiceHeader(Integer.parseInt(invoiceRow[0]),invoiceRow[1],invoiceRow[2]));
                     }
                 } catch (IOException ex) {
-                    JOptionPane.showConfirmDialog(null, new JLabel("No header file found 'InvoiceHeader.csv'"),"ERROR", JOptionPane.OK_CANCEL_OPTION);
+                    JOptionPane.showConfirmDialog(null, new JLabel("No header file found 'InvoiceHeader.csv'"),"ERROR ", JOptionPane.DEFAULT_OPTION);
                     Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
                     System.exit(0);
-                } catch (ParseException e) {
-                    JOptionPane.showConfirmDialog(null, new JLabel("Some Data is in the wrong format in 'InvoiceHeader.csv' file"),"ERROR", JOptionPane.OK_CANCEL_OPTION);
-                    Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, e);
+                } catch (ParseException ex) {
+                    JOptionPane.showConfirmDialog(null, new JLabel("Some Data is in the wrong format in 'InvoiceHeader.csv' file"),"ERROR in data format", JOptionPane.OK_CANCEL_OPTION);
+                    Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
                     System.exit(0);    
+                } catch (Exception ex){
+                    JOptionPane.showConfirmDialog(null, new JLabel(ex.getMessage()),"ERROR in file format", JOptionPane.DEFAULT_OPTION);
+                    return null;
                 }
                 
                 
+                JOptionPane.showConfirmDialog(null, 
+                        "Please Choose the 'InvoiceLine.csv' file!", "Choose File", JOptionPane.DEFAULT_OPTION);                    
+                jfc.showOpenDialog(jfc);
+                invoiceLinesPath = jfc.getSelectedFile().getPath();
                 //Try and catch to open the "InvoiceLine.csv" file and reads from it.
                 try {
-                    JOptionPane.showConfirmDialog(null, 
-                        "Please Choose the 'invoiceLine.csv' file!", "Choose File", JOptionPane.DEFAULT_OPTION);                    
-                    jfc.showOpenDialog(jfc);
-                    invoiceLinesPath = jfc.getSelectedFile().getPath();
+
+                    if(!jfc.getSelectedFile().getName().equals("InvoiceLine.csv")){
+                        throw new Exception("Please make sure to choose a file with the correct name and format of InvoiceLine.csv");
+                    }
                     br = new BufferedReader(new FileReader(invoiceLinesPath));
                     //skip first line of headers and adding each InvoiceLine to its InvoiceHeader.
                     //br.readLine();
@@ -96,9 +106,11 @@ public class FileOperations {
                         }
                     }
                 } catch (IOException ex) {
-                    JOptionPane.showConfirmDialog(null, new JLabel("No file found 'InvoiceLine.csv'"),"ERROR", JOptionPane.OK_CANCEL_OPTION);
+                    JOptionPane.showConfirmDialog(null, new JLabel("No file found 'InvoiceLine.csv'"),"ERROR", JOptionPane.DEFAULT_OPTION);
                     Logger.getLogger(MenuItemsActions.class.getName()).log(Level.SEVERE, null, ex);
                     System.exit(0);
+                } catch (Exception ex) {
+                    JOptionPane.showConfirmDialog(null, new JLabel(ex.getMessage()),"ERROR in file format", JOptionPane.DEFAULT_OPTION);
                 }
                 
                 //printing the data that was parsed from the CSV file.
@@ -190,8 +202,17 @@ public class FileOperations {
     
     
     //A Static Source of the Data for the whole application.
-    public static ArrayList<InvoiceHeader> getInvoicces(){
+    public static ArrayList<InvoiceHeader> getInvoices(){
         return INVOICES;
+    }
+    
+    public static InvoiceHeader getInvoice(int invoiceNo){
+        for(InvoiceHeader invoice: INVOICES){
+            if(invoice.getInvoiceNum() == invoiceNo){
+                return invoice;
+            }
+        }
+        return null;
     }
     
     //A Static array of headers for Singleton design pattern for easier Modifcation.
@@ -348,7 +369,7 @@ public class FileOperations {
     }
     
     
-    private static void userInvoiceItemDialog(InvoiceHeader invoice){
+    public static void userInvoiceItemDialog(InvoiceHeader invoice){
         JTextField itemNameField = new JTextField(50);
         JTextField itemPriceField = new JTextField(4);
         JTextField itemCountField = new JTextField(5);

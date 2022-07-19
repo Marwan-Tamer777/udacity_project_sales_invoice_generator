@@ -26,7 +26,7 @@ public class Udacity_project_sales_invoice_generator {
     
     
     public static void readFileTest(){
-        ArrayList<InvoiceHeader> invoices= FileOperations.getInvoicces();
+        ArrayList<InvoiceHeader> invoices= FileOperations.getInvoices();
         for(int i=0;i<invoices.size();i++){
             InvoiceHeader ih = invoices.get(i);
             System.out.print("Invoice"+ih.getInvoiceNum()+"Num");

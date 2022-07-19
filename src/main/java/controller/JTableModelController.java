@@ -31,7 +31,7 @@ public class JTableModelController extends AbstractTableModel implements ListSel
     public JTableModelController(int type){
         tableType = type;
         
-        if(FileOperations.getInvoicces() == null){
+        if(FileOperations.getInvoices() == null){
             data= new String [0][0];
             if(type == INVOICES_TABLE){
                 columnNames = FileOperations.getInvoicesTableHeaders();

@@ -72,7 +72,7 @@ public class MainFrame extends JFrame{
         JButton createBtn=new JButton("Create New Invoice"); 
         createBtn.setActionCommand("C");
         createBtn.addActionListener(buttonsListener);
-        JButton deleteBtn=new JButton("Delete Current Selected Invoice/Invoice Item"); 
+        JButton deleteBtn=new JButton("Delete Current Selected Invoice."); 
         deleteBtn.setActionCommand("D");
         deleteBtn.addActionListener(buttonsListener);
         leftButtonsPanel.add(createBtn);
@@ -110,10 +110,10 @@ public class MainFrame extends JFrame{
         
         JPanel rightButtonsPanel = new JPanel();
         rightButtonsPanel.setLayout(new BoxLayout(rightButtonsPanel,BoxLayout.X_AXIS));
-        JButton saveEditBtn=new JButton("Save");  
+        JButton saveEditBtn=new JButton("Create InvoieLine");  
         saveEditBtn.setActionCommand("SE");
         saveEditBtn.addActionListener(buttonsListener);
-        JButton cancelEditBtn=new JButton("Cancel");  
+        JButton cancelEditBtn=new JButton("Delete Selected Invoice Item");  
         cancelEditBtn.setActionCommand("CE");
         cancelEditBtn.addActionListener(buttonsListener);
         rightButtonsPanel.add(saveEditBtn);
